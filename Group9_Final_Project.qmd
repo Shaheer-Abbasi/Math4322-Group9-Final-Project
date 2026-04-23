@@ -36,3 +36,6 @@ Our goal is to be able to predict, as accurately as possible, whether an individ
 
 A basic multivariate logistic regression formula would be:  
 $$p(X) = \frac{exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + \dots + \beta_{n} X_{n})}{1 + exp(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + \dots + \beta_{n} X_{n})}$$
+
+
+test
