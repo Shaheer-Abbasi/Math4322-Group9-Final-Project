@@ -96,12 +96,20 @@ mean(lg.error.rate)
 
 After 10 iterations of the training and testing, the mean test error rate was 30.81%. This implies that a person's lifestyle choices such as FAVC, NCP, CAEC, smoking status, physical activity frequency, technology use, alcohol consumption, and transportation method can predict whether an individual is at "high-risk" or "manageable" obesity levels with roughly 69.19% accuracy.
 
-**Logistic Regression (Jordan Pho, Jack Tran, Isaac Kapeel)**\
+**Linear Discriminant Analysis (Jordan Pho, Jack Tran, Isaac Kapeel)**\
 
+LDA assumes that X is drawn from a multivariate normal distribution, where each class has its own mean μk, and both classes share the same spread (common covariance matrix Σ). LDA is very effective in binary classification, though due to the assumption of normality, it makes it so that predictors with categorical values should make it less effective. For example, predictors like MTRANS should make the model perform a little worse due to MTRANS being five categorical values. LDA has capabilities of dimension reduction, though we do not leverage that capability in this project.
+
+
+Below is a typical LDA Multivariant Classifier:
+
+$$\delta_k(x) = x^T\Sigma^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k + \log(\pi_k)$$
+We will first preprocess the data.
 ```{r}
 library(MASS)
 
 obesity = read.csv("ObesityDataSet_raw_and_data_sinthetic 2.csv")
+
 
 obesity$RiskLevel = ifelse(obesity$NObeyesdad %in% c("Obesity_Type_I", "Obesity_Type_II", "Obesity_Type_III"), "High_Risk", "Manageable")
 
@@ -112,6 +120,10 @@ obesity[cols] <- lapply(obesity[cols], as.factor)
 obesity = obesity[obesity$CALC != "Always", ]
 obesity$CALC = droplevels(obesity$CALC)
 
+
+```
+We will randomly split training and test data. Then train the model and test it. This will be repeated 10 different times
+```{r}
 set.seed(1)
 lda.error.rate = rep(0, 10)
 
@@ -126,6 +138,12 @@ for (i in 1:10){
   lda.error.rate[i] = mean(lda.pred != test$RiskLevel)
 }
 
+
+```
+We will then average the error rates
+```{r}
 lda.error.rate
 mean(lda.error.rate)
 ```
+After 10 iterations of the training and testing, the mean test error rate was 31.81%, having a slightly higher error rate in comparison logistic regression model. This means that through LDA, the model can accurately predict roughly 68.19% of the time.
+
