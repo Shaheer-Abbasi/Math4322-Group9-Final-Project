@@ -140,10 +140,11 @@ for (i in 1:10){
 
 
 ```
-We will then average the error rates
+We will then average the error rates and produce a confusion matrix
 ```{r}
 lda.error.rate
 mean(lda.error.rate)
+table(lda.pred, test$RiskLevel)
 ```
 After 10 iterations of the training and testing, the mean test error rate was 31.81%, having a slightly higher error rate in comparison logistic regression model. This means that through LDA, the model can accurately predict roughly 68.19% of the time.
 
